@@ -3,19 +3,71 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI;
+package main;
+
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author vic
  */
 public class jFrame extends javax.swing.JFrame {
-
+    private boolean noIn;
+    int colour = 0;
+    int grade = 0;
+    
+    boolean reinforcedB = false;
+    boolean reinforcedC = false;
+    boolean sealed = false;
+    
+    int quantity = 0;
+    
+    int bwidth = 0;
+    int bheight = 0;
+    int blength = 0;
+    
+    public int getColour(){
+        return colour;
+    }
+    public int getGrade(){
+        return grade;
+    }
+    
+    public boolean getReinforcedB(){
+        return reinforcedB;
+    }
+    public boolean getReinforcedC(){
+        return reinforcedC;
+    }
+    public boolean getSealed(){
+        return sealed;
+    }
+    
+    public int getbWidth(){
+        return bwidth;
+    }
+    public int getbLength(){
+        return blength;
+    }
+    public int getbHeight(){
+        return bheight;
+    }
+    
+    
+    public boolean getNoIn(){
+        return noIn;
+    }
+    public void setNoIn(boolean in){
+        noIn = in;
+    }
     /**
      * Creates new form jFrame
      */
     public jFrame() {
         initComponents();
+        noIn = true;
+        rbn1Colour.setSelected(true);
+        rbnG1.setSelected(true);
     }
 
     /**
@@ -68,14 +120,8 @@ public class jFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Box Width");
 
-        tbxLength.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tbxLengthActionPerformed(evt);
-            }
-        });
-
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Box Dimensions (m^2)");
+        jLabel4.setText("Box Dimensions (cm)");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -245,11 +291,6 @@ public class jFrame extends javax.swing.JFrame {
         cbxCorner.setText("Corner");
 
         cbxBottom.setText("Bottom");
-        cbxBottom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxBottomActionPerformed(evt);
-            }
-        });
 
         cbxSealable.setText("Sealable Top");
 
@@ -278,6 +319,11 @@ public class jFrame extends javax.swing.JFrame {
         );
 
         btnOrder.setText("Order");
+        btnOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrderActionPerformed(evt);
+            }
+        });
 
         btnClear.setText("Clear");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
@@ -335,10 +381,6 @@ public class jFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbnG1ActionPerformed
 
-    private void cbxBottomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxBottomActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxBottomActionPerformed
-
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
         tbxLength.setText("");
@@ -355,10 +397,32 @@ public class jFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnClearActionPerformed
 
-    private void tbxLengthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbxLengthActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbxLengthActionPerformed
+    private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
+        if(rbnNoColour.isSelected()) colour = 0;
+        if(rbn1Colour.isSelected()) colour = 1;
+        if(rbn2Colour.isSelected()) colour = 2;
+        
+        bwidth = Integer.parseInt(tbxWidth.getText());
+        bheight = Integer.parseInt(tbxHeight.getText());
+        blength = Integer.parseInt(tbxLength.getText());
+        
+        if(rbnG1.isSelected()) grade = 1;
+        if(rbnG2.isSelected()) grade = 2;
+        if(rbnG3.isSelected()) grade = 3;
+        if(rbnG4.isSelected()) grade = 4;
+        if(rbnG5.isSelected()) grade = 5;
+        
+        sealed = cbxSealable.isSelected();
+        reinforcedB = cbxBottom.isSelected();
+        reinforcedC = cbxCorner.isSelected();
+        noIn = false;    
+    }//GEN-LAST:event_btnOrderActionPerformed
 
+    
+        public static void error(String err){
+        JOptionPane.showMessageDialog(null, err);
+    }
+    
     /**
      * @param args the command line arguments
      */
