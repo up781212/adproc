@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package boxcompany;
+package main;
+
 
 /**
  *
@@ -13,9 +14,9 @@ public class Box {
     protected int width;
     protected int length;
     protected int height;
-    protected int area; 
+    protected int area;
     protected int grade;
-    protected int noColors;
+    protected int noColours;
     protected boolean reinforcedB;
     protected boolean reinforcedC;
     protected boolean sealable;
@@ -23,90 +24,153 @@ public class Box {
     protected double costIncrease;
     protected double cost;
     
-    public Box(int bWidth, int bLength, int bHeight, int grade,int noBColors, 
+    private boolean boxOK; //possible way of removing old objects
+
+    public Box(int bWidth, int bLength, int bHeight, int grade,int noBColors,
                 boolean bReinforcedB, boolean bReinforcedC,boolean bSealable,int type){
         setWidth(bWidth);
         setLength(bLength);
         setHeight(bHeight);
         setArea();
-        
+
     }
     
+    public Box(){ //for testing, blank
+        grade = 3;
+        noColours = 0;
+        reinforcedB = false;
+        reinforcedC = false;
+        sealable = false;
+        setWidth(101);
+        setHeight(101);
+        setLength(2000);
+        setArea();
+        boxOK = true;
+    }
+
     public int getWidth(){
         return width;
     }
-    
+
     private void setWidth(int iWidth){
-        width = checkSide(iWidth, "width");
+        if(checkSide(iWidth)) width = iWidth;
     }
-      
+
     public int getLength(){
         return length;
     }
-    
+
     private void setLength(int iLength){
-        length = checkSide(iLength, "Length");
+        if(checkSide(iLength)) length = iLength;
     }
-  
+
     public int getHeight(){
         return height;
     }
-     
+
     private void setHeight(int iHeight){
-        height = checkSide(iHeight, "height");
+        if(checkSide(iHeight)) height = iHeight;
     }
     
-    private int checkSide(int cValue,String side){
-        while(cValue <100 || cValue>2000){
-            System.out.println("Unfortunatly the minimum " + side + " of box is 100mm and the maxiumum is 2000mm.\nPlease input the " +side + " of the box you wish us to produce");
-            cValue=200;
+    private boolean checkSide(int cValue){
+        boolean clear = true;
+        if(cValue < 100){
+            UI.jFrame.error("The box is too small. Boxes must be between 100cm and 2000cm");
+            boxOK = clear = false;
         }
-        return cValue;
+        if(cValue > 2000){
+             UI.jFrame.error("The box is too big. Boxes must be between 100cm and 2000cm");
+             boxOK = clear = false;
+         }
+        return clear;
     }
     
+    public void setGrade(int grd){
+        if (grd < 1 || grd > 5){
+            UI.jFrame.error("The grade is invalid. Grade are whole numbers from 1 to 5.");
+        }
+    }
+    public int getGrade(){
+        return grade;
+    }
+
     public int getArea(){
         return area;
     }
-    
+
     private void setArea(){
         int subTotal = width *height *2;
         subTotal += height * length *2;
         subTotal += length * width *2;
     }
-        
-    public int getNoColors(){
-        return noColors;
+
+    public int getNoColours(){
+        return noColours;
     }
-    
-    private void setNoColors(){
-        
+
+    private void setNoColours(int colours){
+        if(colours < 0 || colours >2){
+            UI.jFrame.error("The colour selected was invalid. Please select a colour option.");
+        }
     }
-    
+
     private int checkNoColors(int check){
         return check;
     }
-    
-    public boolean geReinforcedB(){
+
+    public boolean getReinforcedB(){
         return reinforcedB;
     }
-    
-    private void setReinforcedB(){
-        
+
+    private void setReinforcedB(boolean reinforced){
+        reinforcedB = reinforced;
     }
-    
+
     private int checkReinforcedB(int check){
         return check;
     }
-    
+
     public boolean getReinforcedC(){
         return reinforcedC;
     }
-    
-    private void setReinforcedC(){
-        
+
+    private void setReinforcedC(boolean reinforced){
+        reinforcedC = reinforced;
     }
-    
+
     private int checkReinforcedC(int check){
         return check;
+    }
+    
+    public boolean getSealable(){
+        return sealable;
+    }
+    public void setSealable(boolean seal){
+        sealable = seal;
+    }
+    
+    public boolean getBoxOK(){
+        return boxOK;
+    }
+        //provides points for each extra feature of the box. 
+    public int checkBox(){
+        int score = 0;
+        score = getNoColours() + 1; //gives up to 3 points
+        if(getReinforcedB()) score++; 
+        if(getReinforcedC()) score++;
+        
+        //check if the grade is valid
+        boxOK = testGrade(score);
+        return score;
+    }
+    
+    public boolean testGrade(int score){
+        //BLARGGHHHHHH IM A BIG BRUTE OF A TEST PLEASE FIX ME
+        if (grade < score+3){
+            if(reinforcedC && grade > 3)return true;
+            else if (grade > 2)return true;
+            if(grade == score) return true;
+        }
+        return false;
     }
 }

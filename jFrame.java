@@ -5,6 +5,8 @@
  */
 package UI;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author vic
@@ -68,14 +70,8 @@ public class jFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Box Width");
 
-        tbxLength.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tbxLengthActionPerformed(evt);
-            }
-        });
-
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Box Dimensions (m^2)");
+        jLabel4.setText("Box Dimensions (cm)");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -245,11 +241,6 @@ public class jFrame extends javax.swing.JFrame {
         cbxCorner.setText("Corner");
 
         cbxBottom.setText("Bottom");
-        cbxBottom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxBottomActionPerformed(evt);
-            }
-        });
 
         cbxSealable.setText("Sealable Top");
 
@@ -335,10 +326,6 @@ public class jFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbnG1ActionPerformed
 
-    private void cbxBottomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxBottomActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxBottomActionPerformed
-
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
         tbxLength.setText("");
@@ -355,10 +342,11 @@ public class jFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnClearActionPerformed
 
-    private void tbxLengthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbxLengthActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbxLengthActionPerformed
-
+    
+        public static void error(String err){
+        JOptionPane.showMessageDialog(null, err);
+    }
+    
     /**
      * @param args the command line arguments
      */
