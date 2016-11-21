@@ -1,6 +1,8 @@
 package main;
 
 import UI.jFrame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 public class main {
@@ -15,19 +17,32 @@ public class main {
         
         boolean makingBox = true;
                 
-        Box box = new Box();//add bits to get box from UI
 
         while(makingBox){
+            while(aFrame.getNoIn() == true){//for some strange reason, the main instance will not detect anything without something happening.
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }//listens for input
+            
+            UI.jFrame.error("Pending!");
+            
+            Box box = new Box(aFrame.getbWidth(), aFrame.getbLength(), aFrame.getbHeight(), aFrame.getGrade(), aFrame.getColour(), aFrame.getReinforcedB(), aFrame.getReinforcedC(), aFrame.getSealed());//add bits to get box from UI
+
             int score = box.checkBox();
             makeBox(box, score);
             score = box.checkBox();
 
             UI.jFrame.error(box.getGrade() + " " + score + " " + box.getBoxOK());
             if (box.getBoxOK()){ //boolean to check for issues with box upon creation and edit
-              makingBox = false;
+              UI.jFrame.error("Box created successfully!");
             }
             else UI.jFrame.error("box grade is incorrect");
             box.setGrade(3);
+            aFrame.setNoIn(true);
+            
         }
     }
     
@@ -56,6 +71,8 @@ public class main {
         }
         return box;
     }
+    
+    
     
     public static void setNativeFrame(){
                 //set Native

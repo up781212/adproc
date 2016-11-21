@@ -12,6 +12,6 @@ package main;
 public class BoxT5 extends Box{
     
     public BoxT5(int bWidth, int bLength, int bHeight, int bGrade, boolean bSealable){
-        super(bWidth, bLength, bHeight, bGrade, 2, true, true, bSealable, 5);
+        super(bWidth, bLength, bHeight, bGrade, 2, true, true, bSealable);
     }
 }

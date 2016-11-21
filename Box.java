@@ -26,12 +26,17 @@ public class Box {
     
     private boolean boxOK; //possible way of removing old objects
 
-    public Box(int bWidth, int bLength, int bHeight, int grade,int noBColors,
-                boolean bReinforcedB, boolean bReinforcedC,boolean bSealable,int type){
+    public Box(int bWidth, int bLength, int bHeight, int bgrade,int noBColours,
+                boolean bReinforcedB, boolean bReinforcedC,boolean bSealable){
         setWidth(bWidth);
         setLength(bLength);
         setHeight(bHeight);
         setArea();
+        grade = bgrade;
+        noColours = noBColours;
+        reinforcedB = bReinforcedB;
+        reinforcedC = bReinforcedC;
+        sealable = bSealable;
 
     }
     
