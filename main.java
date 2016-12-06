@@ -1,4 +1,4 @@
- 
+
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,16 +50,16 @@ public class main {
     public static void main(String[] args) throws Exception {
 
         //setNativeFrame();
-        jFrame aFrame = new jFrame();
-        aFrame.setTitle("A frame");
+        OrderInput orderInput = new OrderInput();
+        orderInput.setTitle("Order Input");
 
-        aFrame.setVisible(true);
+        orderInput.setVisible(true);
 
         String invoice = "";
         boolean makingBox = true;
 
         while (makingBox) {
-            while (aFrame.getNoIn() == true) {//wait for one millisecond if the form has not been submitted.
+            while (orderInput.getNoIn() == true) {//wait for one millisecond if the form has not been submitted.
                 try {
                     Thread.sleep(1);
                 } catch (InterruptedException ex) {
@@ -68,26 +68,26 @@ public class main {
             }//listens for input
 
             //jFrame.error("Pending!");
-            CheckBox box = new CheckBox(aFrame.getbWidth(), aFrame.getbLength(), aFrame.getbHeight(), aFrame.getGrade(), aFrame.getColour(), aFrame.getReinforcedB(), aFrame.getReinforcedC(), aFrame.getSealed());//add bits to get box from UI
+            CheckBox box = new CheckBox(orderInput.getbWidth(), orderInput.getbLength(), orderInput.getbHeight(), orderInput.getGrade(), orderInput.getColour(), orderInput.getReinforcedB(), orderInput.getReinforcedC(), orderInput.getSealed());//add bits to get box from UI
 
             int score = box.typeDecider();
             Box orderedBox = makeBox(box, score);
 
             if (score != 6) { //boolean to check for issues with box upon creation and edit
-                int orderNo = aFrame.getQuantity();
+                int orderNo = orderInput.getQuantity();
                 addBoxesToOrder(orderedBox, orderNo);
-                makingBox = aFrame.yesNo("Would you like to add another box to the invoice?");
+                makingBox = orderInput.yesNo("Would you like to add another box to the invoice?");
 
             } else {
-                jFrame.error("box grade is incorrect");
+                OrderInput.error("box grade is incorrect");
             }
             box.setGrade(3);
-            aFrame.setNoIn(true);
+            orderInput.setNoIn(true);
 
         }
         invoice = produceInvoice();
         //after boxes are made
-        aFrame.setVisible(false); //hide the input window
+        orderInput.setVisible(false); //hide the input window
         //create an object of the invoiceUI window and load the invoice peviously created
         GuiInvoice invoiceUI = new GuiInvoice();
         invoiceUI.setTitle("Invoice");
@@ -143,12 +143,12 @@ public class main {
                 box = new BoxT5(box.getWidth(), box.getLength(), box.getHeight(), box.getGrade(), box.getSealable());
                 break;
             case 6:
-                jFrame.error("Box failed to build successfully! please retry");
+                OrderInput.error("Box failed to build successfully! please retry");
                 box = new CheckBox();
                 break;
             default:
                 box = new CheckBox();
-                jFrame.error("you made it to default! This box isn't valid!");
+                OrderInput.error("you made it to default! This box isn't valid!");
                 break;
         }
         return box;
@@ -193,7 +193,7 @@ public class main {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()); // get the unique identifier ( being the date and time the order was produced
         String invoiceName = "invoice_" + timeStamp + ".txt"; // sets up the filename
         File iFile = new File(invoiceName);
-        iFile.createNewFile(); // creates the file 
+        iFile.createNewFile(); // creates the file
         String[] messageParts = partInvoice.split("\n"); //splits the message at each new line charecter
         FileOutputStream out = new FileOutputStream(invoiceName);
         for (String bits : messageParts) {

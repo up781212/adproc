@@ -1,7 +1,7 @@
 /*
- * This class details the base of how all the boxes will opperate.  
+ * This class details the base of how all the boxes will opperate.
  */
- 
+
 
 /**
  * @author UP792564
@@ -63,9 +63,9 @@ public abstract class Box {
      * This will give you the cost per Box
      */
     protected double cost;
-    
+
     /**
-     * This is the default constructor which is used as it contains all the variables the Box would have 
+     * This is the default constructor which is used as it contains all the variables the Box would have
      * @param bWidth stands for Box Width in mm
      * @param bLength stands for Box Length in mm
      * @param bHeight stands for Box Heigh tin mm
@@ -87,7 +87,7 @@ public abstract class Box {
         reinforcedC = bReinforcedC;
         sealable = bSealable;
     }
-    
+
     /**
      * This is a testing class for the box where we can test whether we have been provided valid inputs
      */
@@ -102,7 +102,7 @@ public abstract class Box {
         setLength(2000);
         setArea();
     }
-   
+
 
     /**
      * This returns the width of the box
@@ -111,7 +111,7 @@ public abstract class Box {
     public int getWidth(){
         return width;
     }
-    
+
     /**
      * This sets the width of the box by using the check side method to make sure its a valid side
     */
@@ -143,7 +143,7 @@ public abstract class Box {
         return height;
     }
 
-     
+
     /**
      * This sets the height of the box by using the check side method to make sure its a valid side
      * @param iHeight this stands for input height which is in mm.
@@ -151,7 +151,7 @@ public abstract class Box {
     private void setHeight(int iHeight){
         if(checkSide(iHeight)) height = iHeight;
     }
-    
+
 
     /**
      * We have presumed that the the smallest size is 10cm and the largest shall be 2m.
@@ -161,29 +161,29 @@ public abstract class Box {
     private boolean checkSide(int cValue){
         boolean clear = true;
         if(cValue < 100){
-            jFrame.error("The box is too small. Boxes must be between 100cm and 2000cm");
+            OrderInput.error("The box is too small. Boxes must be between 100cm and 2000cm");
             //boxOK = clear = false;
         }
         if(cValue > 2000){
-             jFrame.error("The box is too big. Boxes must be between 100cm and 2000cm");
+             OrderInput.error("The box is too big. Boxes must be between 100cm and 2000cm");
              //boxOK = clear = false;
          }
         return clear;
     }
-    
+
     /**
      * This sets the grade if it is between 1 and 5.
-     * @param grd This is the grade parameter which should be between 1 and 5 as the input passes the value but the if statement is in there just incase. 
+     * @param grd This is the grade parameter which should be between 1 and 5 as the input passes the value but the if statement is in there just incase.
      */
     public void setGrade(int grd){
         if (grd < 1 || grd > 5){
-            jFrame.error("The grade is invalid. Grade are whole numbers from 1 to 5.");
+            OrderInput.error("The grade is invalid. Grade are whole numbers from 1 to 5.");
         }
         else{
             grade = grd;
         }
     }
-    
+
     /**
      * This method returns the grade which should be an integer between 1 and 5
      * @return int grade 1-5
@@ -194,7 +194,7 @@ public abstract class Box {
 
     /**
      * This first calls the method setArea() then it returns the area as a integer in mm2
-     * @return This returns the int area in mm2 
+     * @return This returns the int area in mm2
      */
     public int getArea(){
         setArea();
@@ -207,10 +207,10 @@ public abstract class Box {
     private void setArea(){
         area = width *height *2;
         area += height * length *2;
-        area += length * width *2; 
+        area += length * width *2;
         if (sealable)
                 {
-                    area += height * width; // to account for the flaps 
+                    area += height * width; // to account for the flaps
                 }
     }
 
@@ -230,7 +230,7 @@ public abstract class Box {
     public boolean getReinforcedB(){
         return reinforcedB;
     }
-    
+
     /**
      * This sets the box's boolean to true if reinforced.
      * @param reinforced Whether the should be reinforced
@@ -246,7 +246,15 @@ public abstract class Box {
     public boolean getReinforcedC(){
         return reinforcedC;
     }
-    
+
+     /**
+     * This sets the box's boolean to true if reinforced.
+     * @param reinforced Whether the should be reinforced
+     */
+    private void setReinforcedC(boolean reinforced){
+        reinforcedC = reinforced;
+    }
+
     /**
      * This returns the boolean value of whether the  box is sealable or not.
      * @return will return True if the box is sealable else it will return false.
@@ -254,7 +262,7 @@ public abstract class Box {
     public boolean getSealable(){
         return sealable;
     }
-    
+
     /**
      * This is a boolean value that sets the box to be sealable or unsealable with the parameter seal
      * @param seal this should be a boolean value True if you wish for it to be sealable else False
@@ -262,14 +270,14 @@ public abstract class Box {
     public void setSealable(boolean seal){
         sealable = seal;
     }
-    
+
    /**
-    * This method sets the increased costs associated with each of the optional extras that have been requested with the box. 
+    * This method sets the increased costs associated with each of the optional extras that have been requested with the box.
     */
     abstract void setCostIncrease();
 
     /**
-     * This switch is shared by all Boxes as the grades for boxes doesn't change depending on type. this will return the cost per £ in m2 
+     * This switch is shared by all Boxes as the grades for boxes doesn't change depending on type. this will return the cost per £ in m2
      * Although there will be some cases which cannot be reach we deemed it bad coding to have basically the same switch in each class minus 1 or 2 options when we could just input the list into the Box class. If there where more choices
      * we would change this to an abstract class and override it in each method
      * @return returns the cost per m2 of cardboard in pounds (£)
@@ -296,11 +304,11 @@ public abstract class Box {
             default:
                 System.out.println("Im afraid we are unable to detect the grade size you have rewuested please try again.");
                 gradecost = 0;
-                break;   
+                break;
         }
         return gradecost;
     }
-    
+
 
     /**
      * This sets the cost by getting the area, then multiplying the area (after being converted to m2) by the cost per m2 of cardboard got via gradeCost()
@@ -314,7 +322,7 @@ public abstract class Box {
         cost = cboardCost * costIncrease;
         cost = roundIt(cost);
     }
-    
+
     //
 
     /**
@@ -330,9 +338,9 @@ public abstract class Box {
     /**
      * This produces a string message of the cost of the box as well as other important details for the produceInvoice in the main method
      * We could have done this in the main method but we felt that it made more sense to put it with the box.
-     * @param boxOrderNo is the placement number in the orderList that the box is. 
+     * @param boxOrderNo is the placement number in the orderList that the box is.
      * @param noInOrder This is the number of this kind of box you wish to order
-     * @return message This will return the that has been created based on the options 
+     * @return message This will return the that has been created based on the options
      */
     public String produceCostings(int boxOrderNo, int noInOrder)
     {
@@ -347,24 +355,24 @@ public abstract class Box {
         message += ("----------------------------------------------------");
         return message;
     }
-    
+
     /**
-     * This method creates an easily readable line with all the choices that have been made on the box so that you can see where the costs come from. 
+     * This method creates an easily readable line with all the choices that have been made on the box so that you can see where the costs come from.
      * @return This will return a String that outlines the options that have been selected in this box.
      */
     abstract String getChoices();
-    
+
     /**
      * This method will convert doubles into 2 decimal places that can then be used for converting cost to pounds.
      * @param nRounding This parameter is for the number that needs rounding.
      * @return This will return the rounded number to 2 decimal places.
      */
     public double roundIt(double nRounding)
-    {
+    {    
         int multiplied = (int)(nRounding *1000); // 2 decimal places would be multipling by 100 so we multiple by a further 10 to get the digit that needs rounding then convert it to an int to get rid of the rest of the number
         int uRoundingPoint = ((int)(nRounding*100)*10); // this does a similar thing but we want it to 2dp so that we can get the final digit by itself
         int digit = multiplied - uRoundingPoint; // this gets the digit eg. if my number was 13.34111 then the previous two methods will get it to 13431 - 13430.
-        if (digit >= 5) // this works out if we need it round it up. 
+        if (digit >= 5) // this works out if we need it round it up.
         {
             uRoundingPoint += 10;
         }
